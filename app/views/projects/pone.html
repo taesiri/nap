@@ -17,9 +17,6 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-
-
-
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         tex2jax: {
@@ -32,6 +29,7 @@
     <script type="text/javascript"
       src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
+    <script src="../../js/projects/pone.js"> </script>
 
   </head>
   <body>
@@ -41,7 +39,7 @@
           <a class="btn btn-danger pull-right back-to-home" href="../index.html" role="button">HOME</a>
       </div>
 
-      <div class="col-md-9">
+      <div class="col-md-12">
 
 
           <p> Calculate $ \sqrt{R} $ with the help of following recursive relations :</p>
@@ -51,13 +49,37 @@
               $$ x_{n+1} = \frac{1}{2} \left( x_{n} + \frac{R}{x_{n}} \right) $$
           </p>
 
-          <p></p>
+          <p> </p>
           <p>
               $$ x_{n+1} = \frac{x_{n} \left( x_{n}^2 + 3 R \right)}{3x_{n}^2 + R} $$
           </p>
 
 
           <p> Start point $ x_0 = 1.27235367 + 0.242693281 R - \frac{1.02966039}{1+R} $ </p>
+      </div>
+
+      <hr>
+
+      <div class="col-md12">
+          <div class="col-md6 col-md-push-6">
+              $R$ <input type="text" id="eq1_r"></input> Number of Steps <input type="text" id="eq1_steps"></input>
+
+              <a class="btn btn-success" onclick="calculateResult('table1', 'eq1_r','eq1_steps', 1);"> Calculate 1</a>
+              <table class="table table-bordered table-hover">
+                <tbody id="table1">
+                </tbody>
+              </table>
+        </div>
+          <hr>
+          <div class="col-md6 col-md-push-6">
+               $R$ <input type="text" id="eq2_r"></input> Number of Steps <input type="text" id="eq2_steps"></input>
+
+              <a class="btn btn-success" onclick="calculateResult('table2', 'eq2_r','eq2_steps', 2);"> Calculate 2</a>
+              <table class="table table-bordered table-hover">
+                <tbody id="table2">
+                </tbody>
+              </table>
+            </div>
       </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
