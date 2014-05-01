@@ -44,45 +44,6 @@ function generateRow(index, value) {
     return row;
 }
 
-function generateR1() {
-  r = math.eval(document.getElementById('eq1_r').value);
-  s = document.getElementById('eq1_steps').value;
-
-  var x0 = 1.27235367 + (0.242693281*r) - (1.02966039/(r+1));
-  var last = x0;
-  var results = new Array();
-
-  tbody = generateTableBody('table1');
-
-  for (var i = 0; i < s; i ++) {
-    results[i] = recursionFormula1(last, r);
-    row = generateRow(i+1, results[i]);
-    tbody.appendChild(row);
-
-    last = results[i]; 
-  }
-}
-
-
-function generateR2(tableName) {
-  r = math.eval(document.getElementById('eq2_r').value);
-  s = document.getElementById('eq2_steps').value;
-
-  var x0 = 1.27235367 + (0.242693281*r) - (1.02966039/(r+1));
-  var last = x0;
-  var results = new Array();
-
-  tbody = generateTableBody(tableName);
-  for (var i = 0; i < s; i ++) {
-    results[i] = recursionFormula2(last, r);
-    row = generateRow(i+1, results[i]);
-    tbody.appendChild(row);
-
-    last = results[i];
-  }
-
-}
-
 function coreCalculator(tableName, root, steps, f) {
   r = math.eval(document.getElementById(root).value);
   s = document.getElementById(steps).value;
