@@ -42,23 +42,49 @@
       </div>
       <div class="col-md-9">
 
-          <p> find root of $2x \left(  1+ x^2 \right)^{-1} = tan^{-1}x $ with Bisection method. obtain founded root as $x_{0}$, for newton method and find root of $tan^{-1}x$</p>
+          <p> find positive root of $2x \left(  1+ x^2 \right)^{-1} = tan^{-1}x $ with Bisection method. obtain founded root as $x_{0}$, for newton method and find root of $tan^{-1}x$</p>
 
       </div>
 
-      <hr>
+      <hr />
+
+      <div>
+        Steps <input type="text" id="steps" value=5></input>
+        $a_0$ <input type="text" id="a__0"  value=1.0></input>
+        $b_0$ <input type="text" id="b__0"  value=2.0></input>
+      </div>
+
+      <hr />
+      <div class="control-buttons">
+        <!-- <a class="btn btn&#45;success" onclick="drawGraphFunc();"> Draw Graph</a> -->
+        <!-- <a class="btn btn&#45;success" onclick="drawGraphFunc();"> Draw Function Graph </a> -->
+        <a class="btn btn-success" onclick="drawTang();"> Draw $Tan^{-1}(x)$ Graph</a>
+        <a class="btn btn-success" onclick="calcultaeBisection();"> Solve!</a>
+        <a class="btn btn-success" onclick="clearGraph();"> Clear!</a>
+      </div>
+
       <div class="col-mod-12">
-        <div id="box" class="jxgbox" style="width:500px; height:500px;"></div>
+        <div id="box" class="jxgbox jx-center"></div>
         <script type="text/javascript">
-         var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 10, -10], axis:true});
-         board.create('functiongraph', [function(x){return 2*x*Math.pow((1+(Math.pow(x,2))), -1);}, -Math.PI,Math.PI]);
-         board.create('functiongraph', [function(x){return Math.pow(Math.tan(x), -1);}, -Math.PI,Math.PI]);
+         //var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 10, -10], axis:true});
+         //board.create('functiongraph', [function(x){return 2*x*Math.pow((1+(Math.pow(x,2))), -1);}, -Math.PI,Math.PI]);
+         //board.create('functiongraph', [function(x){return Math.pow(Math.tan(x), -1);}, -Math.PI,Math.PI]);
         </script>
+      </div>
+      <div class="end-table">
+          <table class="table table-bordered table-hover">
+            <tbody id="resultTable">
+            </tbody>
+          </table>
       </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../../js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+      drawGraphFunc();
+    </script>
   </body>
 </html>
 
