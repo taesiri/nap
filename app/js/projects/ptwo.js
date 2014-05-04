@@ -22,16 +22,26 @@ function drawGraph() {
   }
 }
 
-function calcultaeBisection() {
+function calculateBisection() {
   var s = math.eval(document.getElementById('steps').value);
   var a = math.eval(document.getElementById('a__0').value);
   var b = math.eval(document.getElementById('b__0').value);
   var r =  coreCalculator(s,a,b);
-  generateTable(r);
-
+  generateBisectionTable(r);
 
   var newBtn = document.getElementById('nwdiv');
   newBtn.className = "control-buttons";
+
+  document.getElementById('start-newton').value = r[s-1]['c'];
+}
+
+function calculateNewton() {
+  var s = math.eval(document.getElementById('steps-newton').value);
+  var p = math.eval(document.getElementById('start-newton').value);
+
+  var r = coreNewtonCalculator(s, p);
+
+  generateNewtonTable(r);
 }
 
 function ptwoFunc(x) {
@@ -75,12 +85,35 @@ function coreCalculator(steps, a0, b0) {
   return results;
 }
 
-function generateTableBody(tableName) {
+function newtonFunc(x) {
+  return Math.atan(x);
+}
+
+function newtonFuncDerivate(x) {
+  return 1/(1+(x*x));
+}
+
+function coreNewtonCalculator(steps, x0) {
+  var results = new Array();
+  var prevValue = x0;
+  var fx;
+  var dfx;
+  var rfdfx;
+  for (var i = 0; i < steps; i ++) {
+    fx = newtonFunc(prevValue);
+    dfx = newtonFuncDerivate(prevValue);
+    rfdfx = fx/dfx;
+    var newPoint = prevValue - rfdfx;
+    results[i] = {id: i, xn: prevValue, fxn: fx, dfxn: dfx, rfdf: rfdfx};
+    prevValue = newPoint;
+  }
+  return results;
+}
+
+function generateTableBody(tableName, labels) {
   tbody = document.getElementById(tableName);
 
   theaderrow = document.createElement("TR");
-
-  var labels = ['#','a','b', 'c', 'f(a)', 'f(b)', 'f(c)'];
   labels.forEach(function (entry) {
     tCell = document.createElement("TH");
     hNode = document.createTextNode(entry);
@@ -97,9 +130,7 @@ function generateTableBody(tableName) {
   return tbody;
 }
 
-function generateTable(data) {
-  var tb = generateTableBody('resultTable');
-
+function fillTable(tb, data) {
   for(entry in data){
     row = document.createElement("TR");
     for ( key in data[entry]) {
@@ -113,5 +144,16 @@ function generateTable(data) {
   }
 }
 
-function clearGraph() {
+function generateBisectionTable(data) {
+  var tb = generateTableBody('resultTable', ['#','$a$','$b$', '$c=\\frac{a+b}{2}$', '$f(a)$', '$f(b)$', '$f(c)$']);
+  fillTable(tb,data);
+
+  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+}
+
+function generateNewtonTable(data) {
+  var tb = generateTableBody('newtonResultTable', ['#', '$x_n$', '$f(x_n)$', '$f(x_n)$', '$\\frac{f(x_n)}{f(x_n)}$']);
+  fillTable(tb, data);
+
+  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }

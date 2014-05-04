@@ -48,7 +48,7 @@
 
       <hr />
 
-      <div>
+      <div class="user-inputs">
         Steps <input type="text" id="steps" value=5></input>
         $a_0$ <input type="text" id="a__0"  value=1.0></input>
         $b_0$ <input type="text" id="b__0"  value=2.0></input>
@@ -58,9 +58,9 @@
       <div class="control-buttons">
         <!-- <a class="btn btn&#45;success" onclick="drawGraphFunc();"> Draw Graph</a> -->
         <!-- <a class="btn btn&#45;success" onclick="drawGraphFunc();"> Draw Function Graph </a> -->
-        <a class="btn btn-success" onclick="drawTang();"> Draw $Tan^{-1}(x)$ Graph</a>
-        <a class="btn btn-success" onclick="calcultaeBisection();"> Solve!</a>
-        <a class="btn btn-success" onclick="clearGraph();"> Clear!</a>
+        <a class="btn btn-success" onclick="calculateBisection();"> Solve!</a>
+        <!-- <a class="btn btn&#45;success" onclick="clearGraph();"> Clear!</a> -->
+        <a class="btn btn-info" onclick="drawTang();"> Draw $Tan^{-1}(x)$ Graph</a>
       </div>
 
       <div class="col-mod-12">
@@ -77,6 +77,22 @@
             </tbody>
           </table>
       </div>
+      <div class="hidden-div" id="nwdiv">
+        <a class="btn btn-info" onclick="calculateNewton();">Calculate Root of $Tan^{-1}(x)$</a>
+        <div class="col-mod-12 give-a-space">
+          Start Point <input type="text" id="start-newton"></input>
+          Steps <input type="text" id="steps-newton" value=5></input>
+        </div>
+      </div>
+      <div class="col-mod-12">
+        <div class="end-table">
+          <table class="table table-bordered table-hover">
+            <tbody id="newtonResultTable">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

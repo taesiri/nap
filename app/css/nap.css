@@ -8,12 +8,24 @@
   margin-left: auto;
   margin-right: auto;
 }
-.end-table{
+.end-table {
   margin: 20px 0;
 }
-.jx-center{
+.jx-center {
   margin-left: auto;
   margin-right: auto;
   width:500px;
   height:500px;
+}
+
+.hidden-div {
+  display: none;
+}
+.give-a-space {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.user-inputs {
+  margin-left: 20px;
+  margin-right: 20px;
 }
