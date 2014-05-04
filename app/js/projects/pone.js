@@ -1,22 +1,16 @@
 var mathjs = require('mathjs'),
     math = mathjs();
 
-function generateTableBody(tableName) {
+function generateTableBody(tableName, labels) {
   tbody = document.getElementById(tableName);
 
   theaderrow = document.createElement("TR");
-
-  thCell1 = document.createElement("TH");
-  thCell2 = document.createElement("TH");
-
-  headerNode1 = document.createTextNode("#");
-  headerNode2 = document.createTextNode("Result");
-
-  thCell1.appendChild(headerNode1);
-  thCell2.appendChild(headerNode2);
-
-  theaderrow.appendChild(thCell1);
-  theaderrow.appendChild(thCell2);
+  labels.forEach(function (entry) {
+    tCell = document.createElement("TH");
+    hNode = document.createTextNode(entry);
+    tCell.appendChild(hNode);
+    theaderrow.appendChild(tCell);
+  });
 
   while(tbody.firstChild) {
     tbody.removeChild(tbody.firstChild);
@@ -27,48 +21,46 @@ function generateTableBody(tableName) {
   return tbody;
 }
 
-function generateRow(index, value) {
-    row = document.createElement("TR");
-    cel1 = document.createElement("TD");
-    cel2 = document.createElement("TD");
-
-    textNode1 = document.createTextNode(index);
-    textNode2 = document.createTextNode(value);
-
-    cel1.appendChild(textNode1);
-    cel2.appendChild(textNode2);
-
-    row.appendChild(cel1);
-    row.appendChild(cel2);
-
-    return row;
-}
-
-function coreCalculator(tableName, root, steps, f) {
-  r = math.eval(document.getElementById(root).value);
-  s = document.getElementById(steps).value;
-
-  var x0 = 1.27235367 + (0.242693281*r) - (1.02966039/(r+1));
-  var last = x0;
+function coreCalculator(r, s, f) {
+  var realValue = Math.sqrt(r);
+  var last = 1.27235367 + (0.242693281*r) - (1.02966039/(r+1));
   var results = new Array();
 
-  tbody = generateTableBody(tableName);
   for (var i = 0; i < s; i ++) {
-    results[i] = f(last, r);
-    row = generateRow(i+1, results[i]);
-    tbody.appendChild(row);
-
-    last = results[i];
+    var cxn = f(last, r);
+    results[i] = {id: i, xn: cxn, en: Math.abs(realValue-cxn)};
   }
 
+  return results;
+}
+
+function fillTable(tb, data) {
+  for(entry in data){
+    row = document.createElement("TR");
+    for ( key in data[entry]) {
+      cell = document.createElement("TD");
+      tNode = document.createTextNode(data[entry][key]);
+      cell.appendChild(tNode);
+
+      row.appendChild(cell);
+    }
+    tb.appendChild(row);
+  }
 }
 
 function calculateResult(tableName, root, steps, f) {
+  r = math.eval(document.getElementById(root).value);
+  s = document.getElementById(steps).value;
+
+  var result;
   if (f==1) {
-    coreCalculator(tableName, root, steps, recursionFormula1);
+    result = coreCalculator(r, s, recursionFormula1);
   } else if (f==2) {
-    coreCalculator(tableName, root, steps, recursionFormula2);
+    result = coreCalculator(r, s, recursionFormula2);
   }
+  var tb = generateTableBody(tableName, ['#','$x_n$','$e_n$']);
+  fillTable(tb, result);
+  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
 
 function recursionFormula1 (x, r) {
