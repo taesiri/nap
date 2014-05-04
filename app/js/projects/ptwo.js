@@ -4,11 +4,11 @@ var board;
 
 function drawGraphFunc() {
   board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 10, -10], axis:true});
-  board.create('functiongraph', [function(x){return ((1+(x*x))*(Math.pow(Math.tan(x),-1)))/2*x;}, -2*Math.PI,2*Math.PI]);
+  board.create('functiongraph', [function(x){return (2*x)/(1+(x*x)) - Math.atan(x);}, -2*Math.PI,2*Math.PI]);
 }
 
 function drawTang() {
-  board.create('functiongraph', [function(x){return Math.pow(Math.tan(x),-1);}, -Math.PI,Math.PI], {strokeColor:'#ff0000'});
+  board.create('functiongraph', [function(x){return Math.atan(x);}, -20*Math.PI,20*Math.PI], {strokeColor:'#ff0000'});
 }
 
 function drawGraph() {
@@ -28,10 +28,14 @@ function calcultaeBisection() {
   var b = math.eval(document.getElementById('b__0').value);
   var r =  coreCalculator(s,a,b);
   generateTable(r);
+
+
+  var newBtn = document.getElementById('nwdiv');
+  newBtn.className = "control-buttons";
 }
 
 function ptwoFunc(x) {
-  return ((1+(x*x))*(Math.pow(Math.tan(x),-1)))/2*x;
+  return (2*x)/(1+(x*x)) - Math.atan(x);
 }
 
 function coreCalculator(steps, a0, b0) {
@@ -76,7 +80,7 @@ function generateTableBody(tableName) {
 
   theaderrow = document.createElement("TR");
 
-  var labels = ['#','a','b', 'c = (a+b)/2', 'f(a)', 'f(b)', 'f(c)'];
+  var labels = ['#','a','b', 'c', 'f(a)', 'f(b)', 'f(c)'];
   labels.forEach(function (entry) {
     tCell = document.createElement("TH");
     hNode = document.createTextNode(entry);
