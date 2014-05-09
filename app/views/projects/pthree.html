@@ -9,6 +9,7 @@
     <!-- Bootstrap -->
       <link href="../../css/bootstrap.min.css" rel="stylesheet">
       <link href="../../css/nap.css" rel="stylesheet">
+      <link href="../../css/jsxgraph.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -16,9 +17,6 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-
-
 
     <script type="text/x-mathja x-config">
       MathJax.Hub.Config({
@@ -33,6 +31,8 @@
       src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
 
+    <script src="../../js/projects/pthree.js"> </script>
+    <script src="../../js/jsxgraphcore.js"> </script>
   </head>
   <body>
 
@@ -46,19 +46,32 @@
 
           <p> The following polynomial known as Wilkinson. </p>
 
-          <p> $$ P(x) = (x-1)(x-2)...(x-20) $$</p>
+          <p> $$ w(x) = \prod_{i=1}^{20} (x-i) = (x-1)(x-2)...(x-20) $$</p>
 
 
           <p> Small change in coefficient cause major changes in roots. Check if we change $f(x)$ with $f(x)=-10^{-8}x^{19}$; what will happen to $x=20$ </p>
 
           <p> With Secant method show that root lies in $[20,21]$.</p>
 
+
       </div>
+
+      <div class="col-mod-12">
+      </div>
+
+      <div class="col-mod-12">
+        <div id="box" class="jxgbox jx-center"></div>
+      </div>
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      drawGraphFunc();
+    </script>
+
   </body>
 </html>
 

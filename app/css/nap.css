@@ -25,6 +25,10 @@
   margin-top: 15px;
   margin-bottom: 15px;
 }
+.give-some-space {
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
 .user-inputs {
   margin-left: 20px;
   margin-right: 20px;
