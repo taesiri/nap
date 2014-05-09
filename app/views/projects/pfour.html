@@ -9,6 +9,7 @@
     <!-- Bootstrap -->
       <link href="../../css/bootstrap.min.css" rel="stylesheet">
       <link href="../../css/nap.css" rel="stylesheet">
+      <link href="../../css/jsxgraph.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,6 +32,8 @@
       src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
 
+    <script src="../../js/projects/pfour.js"> </script>
+    <script src="../../js/jsxgraphcore.js"> </script>
   </head>
   <body>
 
@@ -38,8 +41,7 @@
           <h1>Project 4 <small>Numerical Analysis</small></h1>
           <a class="btn btn-danger pull-right back-to-home" href="../index.html" role="button">HOME</a>
       </div>
-
-      <div class="col-md-9">
+      <div class="col-md-12">
 
 
           <p> Let $f(x)=max\{0, 1-x\}$, calculate $f$ interpolation when $n=2,4,8,16,32$ in $[-4,4]$ with use of uniform points. Show divergence of $f(x) -P_{n}(x)$.</p>
@@ -47,10 +49,41 @@
           <p> Solve this question with Chebyshev node $x_i = \cos\left[\left(\frac{2i+1}{2n+2}\right)\pi\right]$ and check behavior of $f(x)-P_{n}(x)$.</p>
       </div>
 
+      <div class="user-inputs give-some-space">
+        $N$ <input type="text" id="_n_" value=2></input>
+        $a$ <input type="text" id="_a_"  value=-4.0></input>
+        $b$ <input type="text" id="_b_"  value=4.0></input>
+      </div>
+
+
+      <div class="control-buttons">
+        <a class="btn btn-success" onclick="calculateForwardDifferenceTable();"> Calculate Forward Difference Table</a>
+      </div>
+
+      <div class="end-table">
+          <table class="table table-bordered table-hover">
+            <tbody id="forwardDifferenceTable">
+            </tbody>
+          </table>
+      </div>
+
+      <div class="give-some-space col-md-12">
+        <p id="interpolatorPolynomial"> </p>
+      </div>
+      <hr />
+
+      <div class="col-mod-12">
+        <div id="box" class="jxgbox jx-center"></div>
+      </div>
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      drawGraph();
+    </script>
   </body>
 </html>
 

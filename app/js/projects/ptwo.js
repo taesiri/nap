@@ -137,7 +137,6 @@ function fillTable(tb, data) {
       cell = document.createElement("TD");
       tNode = document.createTextNode(data[entry][key]);
       cell.appendChild(tNode);
-
       row.appendChild(cell);
     }
     tb.appendChild(row);
