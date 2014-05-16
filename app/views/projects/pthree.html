@@ -9,7 +9,6 @@
     <!-- Bootstrap -->
       <link href="../../css/bootstrap.min.css" rel="stylesheet">
       <link href="../../css/nap.css" rel="stylesheet">
-      <link href="../../css/jsxgraph.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,6 +19,8 @@
 
     <script type="text/x-mathja x-config">
       MathJax.Hub.Config({
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } },
         tex2jax: {
           inlineMath: [ ['$','$'], ["\\(","\\)"] ],
           processEscapes: true
@@ -32,7 +33,6 @@
     </script>
 
     <script src="../../js/projects/pthree.js"> </script>
-    <script src="../../js/jsxgraphcore.js"> </script>
   </head>
   <body>
 
@@ -49,19 +49,145 @@
           <p> $$ w(x) = \prod_{i=1}^{20} (x-i) = (x-1)(x-2)...(x-20) $$</p>
 
 
-          <p> Small change in coefficient cause major changes in roots. Check if we change $f(x)$ with $f(x)=-10^{-8}x^{19}$; what will happen to $x=20$ </p>
+          <p> Small change in coefficient cause major changes in roots. Check if we change $w(x)$ with $w(x)=-10^{-8}x^{19}$; what will happen to $x=20$ </p>
 
           <p> With Secant method show that root lies in $[20,21]$.</p>
 
+          <hr />
+          <p> $$ w(x) = x^{20} - 210\, x^{19} + 20615\, x^{18} - 1256850\, x^{17} + 53327946\, x^{16} - 1672280820\, x^{15} + 40171771630\, x^{14} - 756111184500\, x^{13} + 11310276995381\, x^{12} - 135585182899530\, x^{11} + 1307535010540395\, x^{10} - 10142299865511450\, x^9 + 63030812099294896\, x^8 - 311333643161390640\, x^7 + 1206647803780373360\, x^6 - 3599979517947607200\, x^5 + 8037811822645051776\, x^4 - 12870931245150988800\, x^3 + 13803759753640704000\, x^2 - 8752948036761600000\, x + 2432902008176640000 $$ </p>
+        </div>
 
+        <hr />
+
+
+        <div class="col-mod-12">
+          <h2>Sensitivity Analysis</h2>
+
+          <p>Let's perform the following sensivity test:</p>
+          <p>$$C_{19} = -210 \rightarrow C_{19} = -210 - 10^{-8}$$</p>
+          <p>We use the following recursion formula for calculating Wilkinson polynomial in Python: $$P_{n} = [P_{n-1}, 0] - [0, nP_{n-1}]$$</p>
+          <p>Then the roots become:</p>
+
+          <div class="text-center">
+            <img class="img-rounded" src="../../resources/pthree_resources/figure_1.png" style="width:600px">
+          </div>
+
+        </div>
+
+        <div class="col-mod-12">
+          <div class="end-table">
+            <table class="table table-bordered table-hover">
+              <tbody id="sensivityTable">
+            </tbody>
+          </table>
+        </div>
       </div>
-
+      <hr />
       <div class="col-mod-12">
+        <h3>Python Code</h3>
       </div>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #888888"># Third Project Using Python </span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">numpy</span> <span style="color: #008800; font-weight: bold">as</span> <span style="color: #0e84b5; font-weight: bold">np</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">matplotlib.pyplot</span> <span style="color: #008800; font-weight: bold">as</span> <span style="color: #0e84b5; font-weight: bold">plt</span>
+<span style="color: #008800; font-weight: bold">from</span> <span style="color: #0e84b5; font-weight: bold">matplotlib.font_manager</span> <span style="color: #008800; font-weight: bold">import</span> FontProperties
 
-      <div class="col-mod-12">
-        <div id="box" class="jxgbox jx-center"></div>
-      </div>
+N <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">20</span>
+p <span style="color: #333333">=</span> np<span style="color: #333333">.</span>array([<span style="color: #6600EE; font-weight: bold">1.0</span>, <span style="color: #333333">-</span><span style="color: #6600EE; font-weight: bold">1.0</span>], dtype <span style="color: #333333">=</span> <span style="color: #007020">float</span>)
+<span style="color: #008800; font-weight: bold">for</span> n <span style="color: #000000; font-weight: bold">in</span> <span style="color: #007020">range</span>(<span style="color: #0000DD; font-weight: bold">2</span>,N<span style="color: #333333">+</span><span style="color: #0000DD; font-weight: bold">1</span>):
+    p <span style="color: #333333">=</span> np<span style="color: #333333">.</span>append(p, [<span style="color: #6600EE; font-weight: bold">0.0</span>]) <span style="color: #333333">-</span> np<span style="color: #333333">.</span>append([<span style="color: #6600EE; font-weight: bold">0.0</span>], p<span style="color: #333333">*</span>n)
+
+<span style="color: #008800; font-weight: bold">print</span> p
+x <span style="color: #333333">=</span> np<span style="color: #333333">.</span>arange(<span style="color: #0000DD; font-weight: bold">1</span>,<span style="color: #0000DD; font-weight: bold">21</span>,dtype<span style="color: #333333">=</span><span style="color: #007020">float</span>)
+<span style="color: #008800; font-weight: bold">print</span> x
+z <span style="color: #333333">=</span> np<span style="color: #333333">.</span>polyval(p, x)
+<span style="color: #008800; font-weight: bold">print</span> z
+
+xx <span style="color: #333333">=</span> np<span style="color: #333333">.</span>arange(<span style="color: #6600EE; font-weight: bold">0.5</span>, <span style="color: #6600EE; font-weight: bold">20.5</span>, <span style="color: #6600EE; font-weight: bold">0.05</span>, dtype<span style="color: #333333">=</span><span style="color: #007020">float</span>)
+yy <span style="color: #333333">=</span> np<span style="color: #333333">.</span>zeros_like(xx)
+<span style="color: #008800; font-weight: bold">for</span> i <span style="color: #000000; font-weight: bold">in</span> <span style="color: #007020">range</span>(xx<span style="color: #333333">.</span>size):
+    y <span style="color: #333333">=</span> np<span style="color: #333333">.</span>polyval(p,xx[i])
+    yy[i] <span style="color: #333333">=</span> np<span style="color: #333333">.</span>sign(y)<span style="color: #333333">*</span>np<span style="color: #333333">.</span>log(<span style="color: #6600EE; font-weight: bold">1.0</span> <span style="color: #333333">+</span> <span style="color: #007020">abs</span>(y))
+
+zz <span style="color: #333333">=</span> np<span style="color: #333333">.</span>zeros_like(xx)
+
+r <span style="color: #333333">=</span> np<span style="color: #333333">.</span>roots(p)
+<span style="color: #008800; font-weight: bold">print</span> <span style="background-color: #fff0f0">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">Original Wlkinson&#39;&#39;s Roots:</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&#39;</span>
+<span style="color: #008800; font-weight: bold">print</span> r
+
+<span style="color: #888888"># Let&#39;s do modification !</span>
+
+p[<span style="color: #0000DD; font-weight: bold">1</span>] <span style="color: #333333">=</span> p[<span style="color: #0000DD; font-weight: bold">1</span>] <span style="color: #333333">-</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">**-</span><span style="color: #0000DD; font-weight: bold">8</span>
+
+rm <span style="color: #333333">=</span> np<span style="color: #333333">.</span>roots(p)
+<span style="color: #008800; font-weight: bold">print</span> <span style="background-color: #fff0f0">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">Modified Wilkinson&#39;&#39;s Roots:</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&#39;</span>
+<span style="color: #008800; font-weight: bold">print</span> rm
+
+xxm <span style="color: #333333">=</span> np<span style="color: #333333">.</span>arange(<span style="color: #6600EE; font-weight: bold">0.5</span>, <span style="color: #6600EE; font-weight: bold">20.5</span>, <span style="color: #6600EE; font-weight: bold">0.05</span>, dtype<span style="color: #333333">=</span><span style="color: #007020">float</span>)
+yym <span style="color: #333333">=</span> np<span style="color: #333333">.</span>zeros_like(xxm)
+
+<span style="color: #008800; font-weight: bold">for</span> i <span style="color: #000000; font-weight: bold">in</span> <span style="color: #007020">range</span>(xxm<span style="color: #333333">.</span>size):
+    y <span style="color: #333333">=</span> np<span style="color: #333333">.</span>polyval(p,xxm[i])
+    yym[i] <span style="color: #333333">=</span> np<span style="color: #333333">.</span>sign(y)<span style="color: #333333">*</span>np<span style="color: #333333">.</span>log(<span style="color: #6600EE; font-weight: bold">1.0</span> <span style="color: #333333">+</span> <span style="color: #007020">abs</span>(y))
+
+zzm <span style="color: #333333">=</span> np<span style="color: #333333">.</span>zeros_like(xxm)
+
+fig, ax <span style="color: #333333">=</span> plt<span style="color: #333333">.</span>subplots()
+ax<span style="color: #333333">.</span>plot(xx,yy , label<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;Wilkinson&#39;&#39;s Polynomial&#39;</span>)
+ax<span style="color: #333333">.</span>plot(xxm,yym , label<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;Modified - $C_{19} </span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\\</span><span style="background-color: #fff0f0">rightarrow C_{19} - 10^{-8}$&#39;</span>)
+ax<span style="color: #333333">.</span>legend(loc<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;upper left&#39;</span>)
+
+plt<span style="color: #333333">.</span>show()
+</pre></td></tr></table></div>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -69,7 +195,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-      drawGraphFunc();
+      createSensivityTable();
     </script>
 
   </body>
