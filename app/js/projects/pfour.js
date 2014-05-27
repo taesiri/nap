@@ -2,6 +2,7 @@ var mathjs = require('mathjs'),
     math = mathjs();
 var factorials = [];
 var board;
+var interpolationPolynomial;
 
 function drawGraph(){
   board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 10, -10], axis:true});
@@ -18,15 +19,15 @@ function factorial (n) {
   return factorials[n] = factorial(n-1)*n;
 }
 
-function customFactorial(n, l) {
+function partialFactorial(n, l) {
   if ( n == 0 || n == 1 || n-l < 0)
     return 1;
 
   if(n == l)
-    return factorial(b);
+    return factorial(n);
 
   var result = 1;
-  for (var i = n; i >= n-l ; i--) {
+  for (var i = n; i > n-l ; i--) {
     result *= i;
   }
 
@@ -35,6 +36,38 @@ function customFactorial(n, l) {
 
 function calculateFunction(x) {
   return Math.max(0, 1 - x);
+}
+
+function calculateCombination(i,n) {
+  if (i == 0)
+    return 1;
+  if ( n == 0)
+    return 0;
+  if (i == 1)
+    return n;
+  if (i == n)
+    return 1;
+  if ( i > n)
+    return 0;
+
+  var ifactorial = factorial(i);
+  var pnfactorial = partialFactorial(n,i);
+
+  return pnfactorial/ifactorial;
+}
+
+function calculateInterpolation(mu) {
+
+  var result = 0;
+  for ( key in interpolationPolynomial) {
+      var coefficient =  interpolationPolynomial[key]['coefficient'];
+      var i = interpolationPolynomial[key]['index']
+      var combineValue = calculateCombination(i, mu);
+
+      result += coefficient * combineValue;
+  }
+
+  return result;
 }
 
 function forwardDifference(x0, i, h, n){
@@ -67,18 +100,6 @@ function pointHelper(a,b,n,i) {
   return a + i*((b-a)/n);
 }
 
-function evalutaeInterpolator(interpolator, mu) {
-  var result = 0;
-
-  for(entry in interpolator) {
-    var i = interpolator[entry]["c_i"];
-    var cof = interpolator[entry]["coefficient"];
-
-    //var combin = combination(i, mu);
-  }
-  return 0;
-}
-
 function calculateForwardDifferenceTable() {
   var _n_ = math.eval(document.getElementById('_n_').value);
   var _a_ = math.eval(document.getElementById('_a_').value);
@@ -89,6 +110,8 @@ function calculateForwardDifferenceTable() {
 
   var interpolator = new Array();
 
+  interpolationPolynomial = new Array();
+
   for (var i = 0; i <= _n_; i ++) {
     if( i== 0) {
       labels.push("$f(x_i)$");
@@ -96,14 +119,13 @@ function calculateForwardDifferenceTable() {
       labels.push("$\\Delta^{" + i + "}f_i$");
     }
 
-
     var p = pointHelper(_a_,_b_,_n_,i);
     var fp = calculateFunction(p);
     data.push({id : p , FF0: fp});
 
     if ( i == 0) {
-      polyStr.push("\\left( \\begin{array}{c} \\mu  \\\\0 \\end{array} \\right) * "+fp);
-      interpolator.push({coefficient: fp, c_i: i});
+      polyStr.push(fp.toString());
+      interpolationPolynomial.push({index:0 , coefficient:fp})
     }
   }
 
@@ -118,49 +140,61 @@ function calculateForwardDifferenceTable() {
       if ( i== 0) {
         if ( ff12 != 0) {
           polyStr.push("\\left( \\begin{array}{c} \\mu  \\\\"+ k.toString() +" \\end{array} \\right) * "+ff12);
-          interpolator.push({coefficient: ff12, c_i: k});
+          interpolationPolynomial.push({index:k , coefficient:ff12})
         }
       }
     }
   }
 
 
-  var s = "$p(x) = " + polyStr.join(" + ") + "$";
+  var s = "$p(\\mu) = " + polyStr.join(" + ") + "$";
   var tb = generateTableBody("forwardDifferenceTable", labels);
   fillTable(tb, data);
 
   var polyParag = document.getElementById('interpolatorPolynomial');
   polyParag.innerHTML = s;
 
-
-  evalutaeInterpolator(interpolator, 0);
-
+  doComparison();
   MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
 
+function doComparison() {
+  var _n_ = math.eval(document.getElementById('_n_').value);
+  var _a_ = math.eval(document.getElementById('_a_').value);
+  var _b_ = math.eval(document.getElementById('_b_').value);
+  var labels = ["$i$", "$x_i$" , "$\\mu$", "$f(x)$", "$p(x)$", "$e(x)$"];
+  var data = new Array();
+
+  var _h_ = (_b_ - _a_)/_n_;
+  for (var i = 0; i <= _n_; i ++) {
+    var _x_ = _a_ +  i*_h_;
+    var _mu_ = (_x_ - _a_)/_h_ ;
+    var _fxValue_ = calculateFunction(_x_);
+    var _pmuValue_ = calculateInterpolation(_mu_);
+    var _error_  = Math.abs(_fxValue_-_pmuValue_);
+    data[i] =  {id:i, xValue: _x_, mu: _mu_,  fxValue: _fxValue_, pmuValue: _pmuValue_, errValue: _error_};
+  }
+  var tb = generateTableBody("comparisonTable", labels);
+  fillTable(tb, data);
+  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+}
 
 function generateTableBody(tableName, labels) {
   tbody = document.getElementById(tableName);
-
   theaderrow = document.createElement("TR");
-
   while(theaderrow.firstChild) {
     theaderrow.removeChild(theaderrow.firstChild);
   }
-
   labels.forEach(function (entry) {
     tCell = document.createElement("TH");
     hNode = document.createTextNode(entry);
     tCell.appendChild(hNode);
     theaderrow.appendChild(tCell);
   });
-
   while(tbody.firstChild) {
     tbody.removeChild(tbody.firstChild);
   }
-
   tbody.appendChild(theaderrow);
-
   return tbody;
 }
 

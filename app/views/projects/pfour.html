@@ -42,8 +42,6 @@
           <a class="btn btn-danger pull-right back-to-home" href="../index.html" role="button">HOME</a>
       </div>
       <div class="col-md-12">
-
-
           <p> Let $f(x)=max\{0, 1-x\}$, calculate $f$ interpolation when $n=2,4,8,16,32$ in $[-4,4]$ with use of uniform points. Show divergence of $f(x) -P_{n}(x)$.</p>
 
           <p> Solve this question with Chebyshev node $x_i = \cos\left[\left(\frac{2i+1}{2n+2}\right)\pi\right]$ and check behavior of $f(x)-P_{n}(x)$.</p>
@@ -70,12 +68,18 @@
       <div class="give-some-space col-md-12">
         <p id="interpolatorPolynomial"> </p>
       </div>
-      <hr />
 
-      <div class="col-mod-12">
+      <div class="end-table">
+          <table class="table table-bordered table-hover">
+            <tbody id="comparisonTable">
+            </tbody>
+          </table>
+      </div>
+      <hr />
+      <div class="col-mod-12 give-some-space">
+        <h4>Graph</h4>
         <div id="box" class="jxgbox jx-center"></div>
       </div>
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -86,8 +90,3 @@
     </script>
   </body>
 </html>
-
-
-
-
-
