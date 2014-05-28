@@ -4,12 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Project Four</title>
+    <title>Project Five</title>
 
     <!-- Bootstrap -->
       <link href="../../css/bootstrap.min.css" rel="stylesheet">
       <link href="../../css/nap.css" rel="stylesheet">
-      <link href="../../css/jsxgraph.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,7 +32,6 @@
     </script>
 
     <script src="../../js/projects/pfive.js"> </script>
-    <script src="../../js/jsxgraphcore.js"> </script>
   </head>
   <body>
 
@@ -42,15 +40,54 @@
           <a class="btn btn-danger pull-right back-to-home" href="../index.html" role="button">HOME</a>
       </div>
       <div class="col-md-12">
+        <h2>Romberg Integration</h2>
+        <hr />
+        <h3> Algorithm </h3>
+        <div class="bg-info">
+        <p>$h=b-a$</p>
+        <p>$\textbf{for} \ j = 1,2,...,J \ \textbf{do}$</p>
+        <p>$\hspace{20pt} T_{j,1} = \frac{h}{2} [f(a) +  \sum_{j=1}^{2^{j-1}}f(a+jh) + f(b)]$ (Composite Trapezoidal Rule)</p>
+        <p>$\hspace{20pt} \textbf{for} \ k=2,3...j \ \textbf{do}$</p>
+        <p>$\hspace{40pt} T_{j,k} = T_{j,k-1} + \frac{T_{j,k} - T_{j-1,k-1}}{4^{k-1}-1}$ (Richardson Extrapolation) </p>
+        <p>$\hspace{20pt} \textbf{end}$</p>
+        <p>$\hspace{20pt} h=h/2$</p>
+        <p>$\textbf{end}$</p>
+      </div>
+    <hr />
+    <div class="col-md-12">
+       <h4>Calculate $T_{i,j}$ (s)</h4>
 
+       <div class="user-inputs">
+        <p> Auto Fill</p>
+        <a class="btn btn-success" onclick="autoFill(1);"> $\large\int_{1}^{\frac{1}{\sqrt{2}}} \ ( \sqrt{1-x^2} - x ) \ dx$</a>
+        <a class="btn btn-success" onclick="autoFill(2);"> $\large\int_{0}^{\pi} \ \frac{1}{2+\sin{2x}} \ dx$</a>
+        <a class="btn btn-warning" onclick="autoFill(3);" disabled=true> $\large\int_{0}^{+\infty} \ \frac{e^{-x}}{1+e^{-2x}}  \ dx$</a>
+ 
+       </div>
+
+       <div class="user-inputs give-some-space">
+         $f(x)=$ <input type="text" id="_fx_" value='e^(-x^2)'></input>
+         $N$ <input type="text" id="_n_" style="width:25px" value=8 ></input>
+         $a$ <input type="text" id="_a_" style="width:120px" value=0></input>
+         $b$ <input type="text" id="_b_" style="width:120px" value=1></input>
+          <a class="btn btn-info pull-right" onclick="calculateMatrix();"> Calculate</a>
+       </div>
      </div>
+
+     <div class="hidden-div" id="result-div">
+       <h3>Results:</h3>
+        <div class="end-table">
+          <table class="table table-bordered table-hover">
+            <tbody id="romberg-matrix">
+            </tbody>
+         </table>
+        </div>
+     </div>
+   
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../../js/bootstrap.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-      drawGraph();
-    </script>
   </body>
 </html>
 
