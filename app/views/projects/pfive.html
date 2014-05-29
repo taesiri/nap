@@ -61,8 +61,8 @@
         <p> Auto Fill</p>
         <a class="btn btn-success" onclick="autoFill(1);"> $\large\int_{1}^{\frac{1}{\sqrt{2}}} \ ( \sqrt{1-x^2} - x ) \ dx$</a>
         <a class="btn btn-success" onclick="autoFill(2);"> $\large\int_{0}^{\pi} \ \frac{1}{2+\sin{2x}} \ dx$</a>
-        <a class="btn btn-warning" onclick="autoFill(3);" disabled=true> $\large\int_{0}^{+\infty} \ \frac{e^{-x}}{1+e^{-2x}}  \ dx$</a>
- 
+        <a class="btn btn-warning" onclick="autoFill(3);"> $\large\int_{0}^{+\infty} \ \frac{e^{-x}}{1+e^{-2x}}  \ dx$</a>
+
        </div>
 
        <div class="user-inputs give-some-space">
@@ -70,12 +70,13 @@
          $N$ <input type="text" id="_n_" style="width:25px" value=8 ></input>
          $a$ <input type="text" id="_a_" style="width:120px" value=0></input>
          $b$ <input type="text" id="_b_" style="width:120px" value=1></input>
-          <a class="btn btn-info pull-right" onclick="calculateMatrix();"> Calculate</a>
+          <a class="btn btn-info pull-right" onclick="execute();"> Calculate</a>
        </div>
      </div>
 
      <div class="hidden-div" id="result-div">
        <h3>Results:</h3>
+         <h4 class="hidden-div" id="originalVal"></h4>
         <div class="end-table">
           <table class="table table-bordered table-hover">
             <tbody id="romberg-matrix">
@@ -83,11 +84,10 @@
          </table>
         </div>
      </div>
-   
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../../js/bootstrap.min.js"></script>
   </body>
 </html>
-

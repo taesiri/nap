@@ -2,6 +2,8 @@ var mathjs = require('mathjs'),
     math = mathjs();
 
 
+var refIntegralValue = 0
+
 
 function calculateMatrix() {
 
@@ -15,9 +17,8 @@ function calculateMatrix() {
 
   var tArray = new Array();
 
-  
   var h = (_b_ - _a_);
-  
+
   for (var i = 1; i <=_n_; i ++) {
     tArray[i] = new Array();
     tArray[i][1] = h/Math.pow(2,i) *( _fx_(_a_) + 2*calcHelper(_fx_, h/Math.pow(2,i-1) , i, _a_) + _fx_(_b_));
@@ -87,16 +88,31 @@ function autoFill(id) {
   if( id == 1) {
    _a_.value = '1';
    _b_.value = '1/sqrt(2)';
-   _fx_.value = 'sqrt(1-x^2) - x'
+   _fx_.value = 'sqrt(1-x^2) - x';
+   refIntegralValue = 0.3926990816987241548078304;
   }
   else if (id == 2) {
     _a_.value = '0';
     _b_.value = Math.PI;
-    _fx_.value = '1/(2+sin(2*x))' 
+    _fx_.value = '1/(2+sin(2*x))';
+   refIntegralValue = 1.8137993642342178505940782;
   }
   else if (id == 3) {
-   //_a_.value = '0';
-   //_b_.value = '1/sqrt(2)';
-   //_fx_.value = 'sqrt(1-x^2) - x'
+   _a_.value = '0';
+   _b_.value = '1';
+   _fx_.value = '1/(1+x^2)';
+   refIntegralValue = 0.78539816339744830961566084;
   }
+
+
+  var result_label = document.getElementById('originalVal');
+  result_label.innerHTML = "Real Answer: " + refIntegralValue;
+  result_label.className ="";
+
+  calculateMatrix();
+}
+function execute() {
+  var result_label = document.getElementById('originalVal');
+  result_label.className ="hidden-div";
+  calculateMatrix();
 }
