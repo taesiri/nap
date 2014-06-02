@@ -29,8 +29,30 @@ function calculateMatrix() {
 
   var tb = generateTableBody("romberg-matrix", []);
   fillTable(tb, tArray);
-  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+  
+  //  gaussian integral
 
+  var gaussIns = new Array();
+  var onePoint= new Array();
+  onePoint[0] = {w: 2, x: 0};
+  var twoPoint = new Array();
+  twoPoint[0] = {w: 1, x:  0.57735};
+  twoPoint[1] = {w: 1, x: -0.57735};
+  var threePoint = new Array();
+  threePoint[0] = {w: 8/9, x:  0};
+  threePoint[1] = {w: 5/9, x:  0.77459};
+  threePoint[2] = {w: 5/9, x: -0.77459};
+
+
+
+  gaussIns[0] = {mode:'One Point Gaussian Integral', integralValue: gaussianIntegral(_fx_, onePoint)};
+  gaussIns[1] = {mode:'Two Point Gaussian Integral', integralValue: gaussianIntegral(_fx_, twoPoint)};
+  gaussIns[2] = {mode:'Three Point Gaussian Integral', integralValue: gaussianIntegral(_fx_, threePoint)};
+
+  var tbg = generateTableBody("gaussianIntegral", []);
+  fillTable(tbg, gaussIns);
+
+  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 
   var newBtn = document.getElementById('result-div');
   newBtn.className = "give-some-space";
@@ -111,8 +133,17 @@ function autoFill(id) {
 
   calculateMatrix();
 }
+
 function execute() {
   var result_label = document.getElementById('originalVal');
   result_label.className ="hidden-div";
   calculateMatrix();
+}
+
+function gaussianIntegral(fx, points) {
+  var result = 0;
+  for (var i = 0, l = points.length; i < l; i ++) {
+    result += points[i]['w'] * fx(points[i]['x']);
+  }
+  return result;
 }
