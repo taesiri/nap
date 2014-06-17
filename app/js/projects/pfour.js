@@ -162,17 +162,20 @@ function doComparison() {
   var _n_ = math.eval(document.getElementById('_n_').value);
   var _a_ = math.eval(document.getElementById('_a_').value);
   var _b_ = math.eval(document.getElementById('_b_').value);
+  var _m_ = math.eval(document.getElementById('_m_').value);
   var labels = ["$i$", "$x_i$" , "$\\mu$", "$f(x)$", "$p(x)$", "$e(x)$"];
   var data = new Array();
 
   var _h_ = (_b_ - _a_)/_n_;
-  for (var i = 0; i <= _n_; i ++) {
-    var _x_ = _a_ +  i*_h_;
+  for (var i = 0; i <= _m_*_n_; i++) {
+    if( i % _m_ != 0) {
+    var _x_ = _a_ +  (i/_m_)*_h_;
     var _mu_ = (_x_ - _a_)/_h_ ;
     var _fxValue_ = calculateFunction(_x_);
     var _pmuValue_ = calculateInterpolation(_mu_);
     var _error_  = Math.abs(_fxValue_-_pmuValue_);
     data[i] =  {id:i, xValue: _x_, mu: _mu_,  fxValue: _fxValue_, pmuValue: _pmuValue_, errValue: _error_};
+    }
   }
   var tb = generateTableBody("comparisonTable", labels);
   fillTable(tb, data);
